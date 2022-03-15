@@ -1,0 +1,219 @@
+<!DOCTYh3E html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="Shortcut Icon" type="image/x-icon" href="images/ico/Dapino-Summer-Holiday-Palm-tree.ico">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <title>響應式表單的製作</title>
+    
+    <style>
+      body
+      {
+        color: Gold;
+
+        /*background: url(images/aaea27f3e0092903fc02bd505a6a0631.gif) no-repeat;*/
+        background: url(images/BraveOptimalBaleenwhale-size_restricted.gif) no-repeat;
+        background-size: 100% 110%;
+      }
+
+      form
+      {
+        text-align: center;
+      }
+
+      input, label, button
+      {
+        font-size: 30px;
+      }
+
+      input
+      {
+        color: ForestGreen !important;
+        font-weight: bold !important;
+      }
+
+      button
+      {
+        color: Tomato !important;
+      }
+
+      [id^=message_box]
+      {
+        font-size: 22px;
+        height: 150px;
+      }
+
+      #message_box02
+      {
+        /*text-align: center;*/
+        margin: 30px auto;
+        color: ForestGreen;
+      }
+
+      [class^=col-lg]
+      {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p></p>
+      <form id="form01">
+
+        <div class="row">
+          <div class="col-lg-2 col-md-6">
+            <div class="input-group input-group-lg">
+             <span class="input-group-text" id="label01">半徑</span>
+             <input type="text" class="form-control" id="radius_text" name="radius_text" placeholder="數值..." aria-label="radius_text" aria-describedby="addon-wrapping">
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6">
+            <div class="input-group input-group-lg">
+             <span class="input-group-text" id="label02">高度</span>
+             <input type="text" class="form-control" id="height_text" name="height_text" placeholder="數值..." aria-label="height_text" aria-describedby="addon-wrapping">
+            </div>
+          </div>
+
+          <div class="col-lg-2">
+            <div class="d-grid">
+              <button type="button" class="btn btn-lg btn-warning" name="calculate_button" id="calculate_button">計算</button>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-4">
+            <div class="d-grid">
+              <button type="button" class="btn btn-lg btn-danger" name="select_button" id="select_button">查詢</button>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-4">
+            <div class="d-grid">
+              <button type="button" class="btn btn-lg btn-info" name="insert_button" id="insert_button">新增</button>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-4">
+            <div class="d-grid">
+              <button type="button" class="btn btn-lg btn-success" name="update_button" id="update_button">更新</button>
+            </div>
+          </div>
+
+        </div>
+        
+        <!-- <marquee id="message_box01" scrollAmount="30">&nbsp;</marquee> -->
+        
+        
+
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-8">
+            <div class="input-group">
+              <!-- <span class="input-group-text">With textarea</span> -->
+              <textarea id="message_box02" name="message_box02" class="form-control" aria-label="contain the result of calculations"></textarea>
+            </div>
+          </div>
+          <div class="col"></div>
+        </div>
+
+
+
+        <div id="message_box03"></div>
+
+      </form>
+    </div>
+
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      message_box02.style.display = 'none';
+
+      $("#label01, #label02").effect('slide', {direction: 'down', distance: 30}, 1000);
+      $("#radius_text").effect('slide', {direction: 'up', distance: 50}, 1000);
+      $("#height_text").effect('slide', {direction: 'up', distance: 50}, 1000);
+      $("#calculate_button").effect('bounce', {distance: 100, times: 10}, 1000);
+
+      calculate_button.addEventListener('click', calculate);
+
+      select_button.addEventListener('click', handling_action);
+      insert_button.addEventListener('click', handling_action);
+      update_button.addEventListener('click', handling_action);
+
+      /*
+      message_box01.addEventListener('mouseover', message_box01.stop);
+
+      message_box01.addEventListener('mouseout', message_box01.start);
+      */
+
+      function calculate(event)
+      {
+        message_box02.style.display = 'block';
+
+        var radius, height;
+        var cylinder_surface_area, cylinder_volume;
+
+        radius = Number(radius_text.value);
+        height = Number(height_text.value);
+
+        if (event.target.id = "calculate_button")
+        {
+          cylinder_surface_area = 2 * Math.PI * radius ** 2 + 2 * Math.PI * radius * height;
+          cylinder_volume = Math.PI * radius ** 2 * height;
+
+          // message_box01.innerHTML = message_box02.innerHTML = `半徑為 ${radius}、高度為 ${height} 之圓柱體：<br>　　其表面積 = ${cylinder_surface_area.toFixed(3)}<br>　　　其體積 = ${cylinder_volume.toFixed(3)}`;
+          message_box02.value = `半徑為 ${radius}、高度為 ${height} 之圓柱體：\n　　其表面積 = ${cylinder_surface_area.toFixed(3)}\n　　　其體積 = ${cylinder_volume.toFixed(3)}`;
+
+          console.log(message_box02.innerHTML);
+        }
+
+        $("#message_box02").effect('slide', {direction: 'right', distance: 300}, 1000);
+      }
+
+      function handling_action(event)
+      {
+        var action_file = '';
+
+        // switch (event.target.id)
+        switch (event.target)
+        {
+          // case 'select_button':
+          case select_button:
+            action_file = 'basic17-select.php';
+            break;
+
+          // case 'insert_button':
+          case insert_button:
+            action_file = 'basic17-insert.php';
+            break;
+
+          // case 'update_button':
+          case update_button:
+            action_file = 'basic17-update.php';
+            break;
+        }
+
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function()
+        {
+          if (this.readyState == 4 && this.status == 200)
+          {
+            message_box03.innerHTML = this.responseText;
+          }
+        };
+
+        // xhttp.open("GET", "basic17-xxxxxx.php?radius_text=xxxx&height_text=xxxxxx&mesage_box02=xxxxxx", true);
+        xhttp.open("GET", `${action_file}?radius_text=${radius_text.value}&height_text=${height_text.value}&message_box02=${message_box02.value}`, true);
+        xhttp.send();
+      }
+    </script>
+  </body>
+</html>
